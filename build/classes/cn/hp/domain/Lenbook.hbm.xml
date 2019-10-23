@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping>
+    <class name="cn.hp.domain.Lenbook" table="lenbook">
+		<id name="leid">
+		<generator class="native"></generator>
+		</id>  
+		<!-- 其他字段 -->
+		<property name="credate"></property>  
+		<property name="retdate"></property>  
+		<property name="flag"></property>  
+		<property name="returnbook"></property>  
+	  <many-to-one name="member" class="cn.hp.domain.Member" column="mid" lazy="false"></many-to-one>
+	  <many-to-one name="books" class="cn.hp.domain.Books" column="bid" lazy="false"></many-to-one>
+    </class>
+    </hibernate-mapping>

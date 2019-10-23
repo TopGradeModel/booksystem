@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping>
+    <class name="cn.hp.domain.Books" table="books">
+    <!-- 主键 -->
+    <id name="bid">
+    <generator class="native"></generator>
+    </id>
+    <!-- 其他字段 -->
+    <property name="name"></property>
+    <property name="credate"></property>
+    <property name="status"></property>
+    <property name="note"></property>
+    <many-to-one name="admin" column="aid" class="cn.hp.domain.Admin"></many-to-one>
+    <many-to-one name="item" column="iid" class="cn.hp.domain.Item"></many-to-one>
+    <!-- 在1的一方 -->
+    <set name="lenbooks">
+    <key column="bid"></key>
+    <one-to-many class="cn.hp.domain.Lenbook"/>
+    </set>
+    </class>
+    </hibernate-mapping>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:tx="http://www.springframework.org/schema/tx" 
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+        
+        <!-- 配置c3p0 -->
+		<context:property-placeholder location="classpath:jdbc.properties"/>
+		<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+			<property name="driverClass" value="${jdbc.driverClass}"></property>		
+			<property name="jdbcUrl" value="${jdbc.url}"></property>		
+			<property name="user" value="${jdbc.userName}"></property>		
+			<property name="password" value="${jdbc.password}"></property>		
+		</bean>
+		<!-- 配置sessionFactory -->
+		<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+			<!-- 注入数据源 -->
+			<property name="dataSource" ref="dataSource"></property>
+			<!-- 配置hibrnate -->
+			<property name="hibernateProperties">
+				<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				</props>
+			</property>
+			<property name="mappingDirectoryLocations" value="classpath:cn/hp/domain"></property>
+		</bean>
+		<!-- 配置事务 -->
+		<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+		</bean>
+		<!-- 配置注解扫描器 -->
+		<context:component-scan base-package="cn.hp"></context:component-scan>
+		<!-- 配置事务扫描器 -->
+		<tx:annotation-driven/>
+		<!-- hibernateTemplate -->
+		<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+		</bean>
+		
+		
+		<!-- web -->
+		<!-- 登陆模块 -->
+		<bean id="loginAction" class="cn.hp.web.main.LoginAction">
+		<property name="loginService" ref="loginService"></property>
+		</bean>
+		<!-- 用户模块 -->
+		<bean id="userAction" class="cn.hp.web.main.UseAction">
+		<property name="userService" ref="userService"></property>
+		</bean>
+		<!-- 分类模块 -->
+		<bean id="itemAction" class="cn.hp.web.main.ItemAction">
+		<property name="itemService" ref="itemService"></property>
+		</bean>
+		<!-- 图书模块 -->
+		<bean id="booksAction" class="cn.hp.web.main.BooksAction">
+		<property name="booksService" ref="booksService"></property>
+		</bean>
+		<!-- 借书模块 -->
+		<bean id="lenBooksAction" class="cn.hp.web.main.LenBooksAction">
+		<property name="lenBooksService" ref="lenBooksService"></property>
+		</bean>
+		<!-- 添加管理员模块 -->
+		<bean id="adminAction" class="cn.hp.web.main.AdminAction">
+		<property name="adminService" ref="adminService"></property>
+		</bean>
+		<!-- service -->
+		<!-- 用户模块 -->
+		<bean id="loginService" class="cn.hp.service.LoginServiceImpl">
+		<property name="loginDao" ref="loginDao"></property>
+		</bean>
+		<!-- 登陆模块 -->
+		<bean id="userService" class="cn.hp.service.UserServiceImpl">
+		<property name="userDao" ref="userDao"></property>
+		</bean>
+		<!-- 分类模块 -->
+		<bean id="itemService" class="cn.hp.service.ItemServiceImpl">
+			<property name="itemDao" ref="itemDao"></property>
+		</bean>
+		<!-- 图书模块 -->
+		<bean id="booksService" class="cn.hp.service.BooksServiceImpl">
+		<property name="booksDao" ref="booksDao"></property>
+		</bean>
+		<!-- 借书模块 -->
+		<bean id="lenBooksService" class="cn.hp.service.LenBooksServiceImpl">
+		<property name="lenBooksDao" ref="lenBooksDao"></property>
+		</bean>
+		<!-- 添加管理员模块 -->
+		<bean id="adminService" class="cn.hp.service.AdminServiceImpl">
+		<property name="adminDao" ref="adminDao"></property>
+		</bean>
+		
+		
+		<!-- dao -->
+		<!-- 登陆模块 -->
+		<bean id="loginDao" class="cn.hp.dao.LoginDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+		</bean>
+		<!-- 用户模块 -->
+		<bean id="userDao" class="cn.hp.dao.UserDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+		</bean>
+		<!-- 分类模块 -->
+		<bean id="itemDao" class="cn.hp.dao.ItemDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+		</bean>
+		<!-- 图书模块 -->
+		<bean id="booksDao" class="cn.hp.dao.BooksDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+		</bean>
+		<!-- 借书模块 -->
+		<bean id="lenBooksDao" class="cn.hp.dao.LenBooksDaoImpl">
+			<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+		</bean>
+		<!-- 添加管理员模块 -->
+		<bean id="adminDao" class="cn.hp.dao.AdminDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+		</bean>
+		
+</beans>

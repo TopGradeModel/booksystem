@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping>
+    <class name="cn.hp.domain.Admin" table="admin">
+    <!-- 主键 -->
+    <id name="aid">
+    </id>
+    <!-- 其他字段 -->
+    <property name="password"></property>
+    <property name="lastdate"></property>
+    <property name="flag"></property>
+    <property name="urls"></property>
+    <property name="status"></property>
+    <set name="books" lazy="true">
+    <key column="aid"></key>
+    <one-to-many class="cn.hp.domain.Books"/>
+    </set>
+    </class>
+    </hibernate-mapping>

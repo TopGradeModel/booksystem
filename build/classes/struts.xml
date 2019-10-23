@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 将action交给spring管理 -->
+	<constant name="struts.objectFactory" value="spring"></constant>
+    <package name="default" namespace="/" extends="struts-default">
+    <!-- 登陆模块 -->
+	<action name="user_*" class="loginAction" method="{1}">
+		<result name="forward">/pages/forward.jsp</result>
+		<result name="end">/login.jsp</result>
+	</action>
+	<!-- 管理员模块 -->
+	<action name="admin_*" class="adminAction" method="{1}">
+	<param name="savePath">F:\tomcat\apache-tomcat-7.0.79\webapps\booksystem\assets\img</param>
+		<result name="addAdmin">/pages/forward.jsp</result>
+		<result name="listAdmin">/pages/admin/listAdmin.jsp</result>
+		<result name="updateAdmin" type="chain">admin_findAdmin</result>
+	</action>
+	<!-- 用户模块 -->
+	<action name="member_*" class="userAction" method="{1}">
+		<result name="addMember">/pages/forward.jsp</result>
+		<result name="listMember">/pages/member/listMember.jsp</result>
+		<result name="updateMember" type="chain">member_findUser</result>
+	</action>
+	<!-- 分类模块 -->
+	<action name="item_*" class="itemAction" method="{1}">
+	<result name="addItem">/pages/forward.jsp</result>
+	<result name="listItem">/pages/item/listItem.jsp</result>
+	<result name="listIid">/pages/books/addBooks.jsp</result>
+	<result name="updateItem" type="chain">item_findItem</result>
+	</action>
+	<!-- 图书模块 -->
+	<action name="book_*" class="booksAction" method="{1}">
+		<result name="addBooks">/pages/forward.jsp</result>
+		<result name="listBooks">/pages/books/listBooks.jsp</result>
+		<result name="updateBooks" type="chain">book_listBooks</result>
+	</action>
+	<!-- 借书模块 -->
+	<action name="lenBook_*" class="lenBooksAction" method="{1}">
+		<result name="add">/pages/forward.jsp</result>
+		<result name="findBook">/pages/lenbook/addLenBook.jsp</result>
+		<result name="listLenBook">/pages/lenbook/listLenBook.jsp</result>
+		<result name="update" type="chain">lenBook_findLenBook</result>
+		<result name="oneLen">/pages/lenbook/oneLenBook.jsp</result>
+	</action>
+    </package>
+</struts>

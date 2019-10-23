@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping>
+    <class name="cn.hp.domain.Member" table="member">
+    <!-- 主键 -->
+    <id name="mid">
+    </id>
+    <!-- 其他字段 -->
+    <property name="mname"></property>
+    <property name="age"></property>
+    <property name="sex"></property>
+    <property name="phone"></property>
+    <set name="lenbooks">
+    <key column="mid"></key>
+    <one-to-many class="cn.hp.domain.Lenbook"/>
+    </set>
+    </class>
+    </hibernate-mapping>

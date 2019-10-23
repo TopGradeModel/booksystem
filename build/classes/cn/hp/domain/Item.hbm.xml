@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping>
+    	<class name="cn.hp.domain.Item" table="item">
+    	<id name="iid">
+    	<generator class="native"></generator>
+    	</id>
+    	<!-- 其他字段 -->
+    	<property name="iname"></property>
+    	<property name="note"></property>
+    	<set name="bookss" lazy="true">
+    	<key column="iid"></key>
+    	<one-to-many class="cn.hp.domain.Books"/>
+    	</set>
+    	
+    	</class>
+    </hibernate-mapping>
